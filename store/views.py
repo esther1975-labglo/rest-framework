@@ -249,3 +249,5 @@ class StripeWebhookAPIView(APIView):
 
             send_payment_success_email_task.delay(customer_email)
         return Response(status=status.HTTP_200_OK)
+
+
