@@ -15,8 +15,10 @@ from .views import (
     PaymentViewSet,
     LoginView,
     ReviewViewSet,
-    StripeCheckoutSessionCreateAPIView,
-    StripeWebhookAPIView
+    #StripeCheckoutSessionCreateAPIView,
+    #WebhookView,
+    CheckoutSession,
+    Webhook
 
 )
 
@@ -37,6 +39,10 @@ urlpatterns = [
     path('', include(router.urls)),
     path('login/', LoginView.as_view()),
     path('stripe_payment', views.test_payment, name = 'payment'),
-    path('stripe_create-checkout-session',StripeCheckoutSessionCreateAPIView.as_view(), name='checkout_session'),
-    path('stripe/webhook/', StripeWebhookAPIView.as_view(), name='stripe_webhook'),
+   #path('stripe_create-checkout-session',StripeCheckoutSessionCreateAPIView.as_view(), name='checkout_session'),
+   #path('stripe/webhook/', WebhookView.as_view(), name='stripe_webhook'),
+    path('CheckoutSession', CheckoutSession.as_view(), name='CheckoutSession'),
+    path('Webhook', Webhook.as_view(), name='Webhook'),
+    
+    
 ]

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 import uuid
+import json
 from django.db.models.lookups import IntegerFieldFloatRounding
 
 Order_choices = [
@@ -60,15 +61,15 @@ class Cart(TimeStampBaseModel):
 
 class Cartitems(TimeStampBaseModel):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    product =  models.ForeignKey(Product, on_delete=models.CASCADE)
+    product =  models.ForeignKey(Product, null = True, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
     tax = models.FloatField(default=22.50)
     
         
 class Order(TimeStampBaseModel):
     user = models.ForeignKey(User, on_delete = models.CASCADE, blank = True, null = True)
-    product =  models.ForeignKey(Product, on_delete=models.CASCADE)
-    cart_items = models.ForeignKey(Cartitems, on_delete=models.CASCADE)
+    product =  models.ForeignKey(Product, null = True, on_delete=models.CASCADE)
+    cart_items = models.ManyToManyField(Cartitems)
     status = models.BooleanField(default = False)
 
 
@@ -105,6 +106,9 @@ class Wishlist(TimeStampBaseModel):
 
 class Payment(models.Model):
     transaction_id = models.TextField()
-    order = models.ForeignKey(Cart, on_delete = models.CASCADE)
+    order = models.ForeignKey(Cart, null = True, on_delete = models.CASCADE)
     status = models.CharField(max_length = 1, default = "P", null = True, choices = Payment_choices)
+
+
+
 
