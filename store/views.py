@@ -15,7 +15,6 @@ from store.models import (
     Review
 )
 from store.serializers import (
-    RegisterSerializer,
     LoginSerializer,
     UserSerializer,
     ProductSerializer,
@@ -45,21 +44,6 @@ from django.views.generic import TemplateView
 from rest_framework import permissions
 from django.conf import settings
 import stripe
-
-'''user registeration'''
-
-class RegisterAPI(generics.GenericAPIView):
-    serializer_class = RegisterSerializer
-
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        token,created=Token.objects.get_or_create(user=user)
-        return Response({
-        "token": token.key,    
-        "user": UserSerializer(user, context=self.get_serializer_context()).data,
-        }, status=status.HTTP_200_OK)
 
 
 '''user login'''
@@ -94,26 +78,31 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 
 class CartViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticated,)
     serializer_class = CartSerializer
     queryset = Cart.objects.all()
 
 
 class CartitemsViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticated,)
     serializer_class = CartitemsSerializer
     queryset = Cartitems.objects.all()
 
 
 class OrderViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticated,)
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
 
 
 class ProductOrderViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticated,)
     serializer_class = ProductOrderSerializer
     queryset = ProductOrder.objects.all()
 
 
 class ShippingAddressViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticated,)
     serializer_class = ShippingAddressSerializer
     queryset = ShippingAddress.objects.all()
 
@@ -124,6 +113,7 @@ class WishlistViewSet(viewsets.ModelViewSet):
 
 
 class PaymentViewSet(viewsets.ModelViewSet):
+    permission_classes = (permissions.IsAuthenticated,)
     serializer_class = PaymentSerializer
     queryset = Payment.objects.all()
 

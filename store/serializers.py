@@ -16,19 +16,6 @@ from store.models import (
 )
 from django.contrib.auth import authenticate
 
-class RegisterSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('id', 'username', 'email', 'password')
-        token = serializers.SerializerMethodField('get_user_token')
-
-    def create(self, validated_data):
-        user = User.objects.create_user(validated_data['username'], validated_data['email'])
-
-        return user
-
-    def get_user_token(self, obj):
-        return Token.objects.get_or_create(user=obj)[0].key
 
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(

@@ -13,7 +13,6 @@ from .views import (
     ShippingAddressViewSet,
     WishlistViewSet,
     PaymentViewSet,
-    RegisterAPI,
     LoginView,
     ReviewViewSet,
     StripeCheckoutSessionCreateAPIView,
@@ -36,7 +35,6 @@ router.register(r'reviews', ReviewViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('register/', RegisterAPI.as_view(), name='register'),
     path('login/', LoginView.as_view()),
     path('stripe_payment', views.test_payment, name = 'payment'),
     path('stripe_create-checkout-session',StripeCheckoutSessionCreateAPIView.as_view(), name='checkout_session'),
