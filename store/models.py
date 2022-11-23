@@ -107,4 +107,4 @@ class Payment(models.Model):
     transaction_id = models.TextField()
     order = models.ForeignKey(Cart, on_delete = models.CASCADE)
     status = models.CharField(max_length = 1, default = "P", null = True, choices = Payment_choices)
-   
+
