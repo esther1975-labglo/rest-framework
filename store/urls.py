@@ -18,8 +18,10 @@ from .views import (
     #StripeCheckoutSessionCreateAPIView,
     #WebhookView,
     CheckoutSession,
-    Webhook
-
+    Webhook,
+    GetPublishableKey,
+    GetCheckoutSession,
+    CreateCheckoutSession
 )
 
 router = DefaultRouter()
@@ -43,6 +45,10 @@ urlpatterns = [
    #path('stripe/webhook/', WebhookView.as_view(), name='stripe_webhook'),
     path('CheckoutSession', CheckoutSession.as_view(), name='CheckoutSession'),
     path('Webhook', Webhook.as_view(), name='Webhook'),
-    
-    
+    path('GetPublishableKey', GetPublishableKey.as_view(), name='GetPublishableKey'),
+    path('GetCheckoutSession', GetCheckoutSession.as_view(), name='GetCheckoutSession'),
+    path('CreateCheckoutSession', CreateCheckoutSession.as_view(), name='CreateCheckoutSession'),
 ]
+
+
+
